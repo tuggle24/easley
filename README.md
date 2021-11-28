@@ -1,0 +1,1 @@
+docker run -w /app -v "$(pwd):/app" -it --rm node bash

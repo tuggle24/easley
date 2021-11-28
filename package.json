@@ -1,0 +1,21 @@
+{
+  "name": "what",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "tap"
+  },
+  "dependencies": {
+    "tap": "latest",
+    "ws": "^8.2.3"
+  },
+  "devDependencies": {
+    "p-whilst": "^3.0.0"
+  },
+  "terminal.integrated.profiles.windows": {
+    "Nu": {
+      "source": "C:\\Users\\tuggle.24\\.cargo\\bin\\nu.exe"
+    }
+  }
+}
