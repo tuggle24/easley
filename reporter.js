@@ -1,26 +1,61 @@
-export const reporter = () => {
-  return {
-    messages: [],
-    connectionCb: undefined,
-    receivedMessages: [],
+import { eventLoopCycle } from "./wait-for.js";
+
+export function createReporter(rehearsal) {
+  const history = Object.assign(
+    {
+      messages: [],
+      connectionCb: undefined,
+      receivedMessages: [],
+      rejections: 0,
+      attempts: 0,
+      channels: new Map(),
+    },
+    rehearsal
+  );
+
+  const reporter = {
     saveReceivedMessage(msg) {
-      this.receivedMessages.push(msg);
+      history.receivedMessages.push(msg);
     },
     saveMessage(msg) {
-      this.messages.push(msg);
+      history.messages.push(msg);
     },
     connectChannel(channel) {
-      if (this.connectionCb) this.connectionCb(channel);
+      if (history.connectionCb) history.connectionCb(channel);
     },
     increaseAttepmts() {
       history.attempts++;
     },
     isAcceptingConnections() {
-      return history.attempts - script.rejections > 0;
+      return history.attempts - history.rejections > 0;
     },
-    channels: new Map(),
     saveChannel(id, channel) {
-      this.channels.set(id, channel);
+      history.channels.set(id, channel);
     },
   };
-};
+
+  const report = async () => {
+    await eventLoopCycle();
+    const record = [];
+    history.channels.forEach((value) => {
+      if (value.isOpen) record.push(value);
+    });
+    return {
+      clients: record,
+      attempts: history.attempts,
+      messages: history.messages,
+      receivedMessages: history.receivedMessages,
+    };
+  };
+  const onClose = () => {};
+  const onConnection = (cb) => {
+    history.connectionCb = cb;
+  };
+
+  return {
+    reporter,
+    report,
+    onConnection,
+    onClose,
+  };
+}
