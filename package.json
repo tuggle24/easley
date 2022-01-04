@@ -1,21 +1,20 @@
 {
-  "name": "what",
+  "name": "easley",
   "version": "0.0.1",
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "test": "tap"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
-    "tap": "latest",
-    "ws": "^8.2.3"
+    "uri-js": "^4.4.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "babel-jest": "^27.4.2",
+    "jest": "^27.4.0",
     "p-whilst": "^3.0.0"
-  },
-  "terminal.integrated.profiles.windows": {
-    "Nu": {
-      "source": "C:\\Users\\tuggle.24\\.cargo\\bin\\nu.exe"
-    }
   }
 }
