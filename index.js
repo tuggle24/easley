@@ -1,4 +1,4 @@
-import { createSocket } from "./create-socket.js";
+import { createSocket } from "./lib/create-socket.js";
 
 export function createIo(options = {}) {
   return createSocket("io", options);
